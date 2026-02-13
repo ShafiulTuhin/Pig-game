@@ -59,7 +59,7 @@ holdBtn.addEventListener("click", () => {
   //Calling switch player function
   switchPlayer();
   //Winning condition for player-1
-  if (playerOneScore >= 20 && playerOneScore > playerTwoScore) {
+  if (playerOneScore >= 100 && playerOneScore > playerTwoScore) {
     playerOneName.textContent = "Player - 1 win!";
     playerOneName.classList.add("bg-amber-300");
     playerOneName.classList.add("py-3");
@@ -69,7 +69,7 @@ holdBtn.addEventListener("click", () => {
     cheersSound.play();
   }
   //Winning condition for player-2
-  if (playerTwoScore >= 20 && playerTwoScore > playerOneScore) {
+  if (playerTwoScore >= 100 && playerTwoScore > playerOneScore) {
     playerTwoName.textContent = "Player - 2 win!";
     playerTwoName.classList.add("bg-amber-300");
     playerTwoName.classList.add("py-3");

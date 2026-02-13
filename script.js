@@ -3,21 +3,18 @@ const playerOne = document.querySelector("#player--1");
 const playerTwo = document.querySelector("#player--2");
 const playerOneName = document.querySelector(".name--1");
 const playerTwoName = document.querySelector(".name--2");
-const scorePlayerOne = document.querySelector(".current_score--1");
-const scorePlayerTwo = document.querySelector(".current_score--2");
 const playerOneTotal = document.querySelector("#player_1--total");
 const playerTwoTotal = document.querySelector("#player_2--total");
 const dice = document.querySelector(".dice");
 const rollDiceBtn = document.querySelector(".rollDice");
 const newGameBtn = document.querySelector(".newGame");
 const holdBtn = document.querySelector(".hold");
-
+const cheersSound = new Audio("./cheers.mp3");
 //Initial conditions
 let currentScore = 0;
 let activePlayer = 1;
 let playerOneScore = 0;
 let playerTwoScore = 0;
-
 //Switch player
 const switchPlayer = () => {
   //Current score zero
@@ -28,6 +25,17 @@ const switchPlayer = () => {
   activePlayer !== 1 ? playerOne.classList.add("bg-[#ad6d8c]") : "";
   playerOne.classList.toggle("bg-[#d4a5b2]");
   playerTwo.classList.toggle("bg-[#d4a5b2]");
+};
+//Cheers function
+const cheers = () => {
+  confetti({
+    particleCount: 150,
+    spread: 70,
+    origin: { y: 0.6 },
+  });
+  activePlayer = 1;
+  rollDiceBtn.disabled = true;
+  holdBtn.disabled = true;
 };
 //Event handler
 rollDiceBtn.addEventListener("click", () => {
@@ -51,43 +59,46 @@ holdBtn.addEventListener("click", () => {
   //Calling switch player function
   switchPlayer();
   //Winning condition for player-1
-  if (playerOneScore >= 20) {
+  if (playerOneScore >= 20 && playerOneScore > playerTwoScore) {
     playerOneName.textContent = "Player - 1 win!";
     playerOneName.classList.add("bg-amber-300");
     playerOneName.classList.add("py-3");
     playerOneName.classList.add("rounded-lg");
-    rollDiceBtn.disable = true;
-    holdBtn.disable = true;
     playerOneScore = 0;
+    cheers();
+    cheersSound.play();
   }
   //Winning condition for player-2
-  if (playerTwoScore >= 20) {
+  if (playerTwoScore >= 20 && playerTwoScore > playerOneScore) {
     playerTwoName.textContent = "Player - 2 win!";
     playerTwoName.classList.add("bg-amber-300");
     playerTwoName.classList.add("py-3");
     playerTwoName.classList.add("rounded-lg");
-    rollDiceBtn.disable = true;
-    holdBtn.disable = true;
     playerTwoScore = 0;
+    cheers();
+    cheersSound.play();
   }
 });
 
 newGameBtn.addEventListener("click", () => {
-  activePlayer = 1;
+  playerOneScore = 0;
+  playerTwoScore = 0;
   dice.classList.add("hidden");
   document.querySelector(`.current_score--${activePlayer}`).textContent = 0;
   playerOneTotal.textContent = 0;
   playerTwoTotal.textContent = 0;
+  //Player 1
   playerOneName.textContent = "PLAYER 1";
   playerOneName.classList.remove("bg-amber-300");
   playerOneName.classList.remove("py-3");
   playerOneName.classList.remove("rounded-lg");
+  // Player-2
   playerTwoName.textContent = "PLAYER 2";
   playerTwoName.classList.remove("bg-amber-300");
   playerTwoName.classList.remove("py-3");
   playerTwoName.classList.remove("rounded-lg");
-  rollDiceBtn.disable = false;
-  holdBtn.disable = false;
+  rollDiceBtn.disabled = false;
+  holdBtn.disabled = false;
 });
 
 // //Select elements

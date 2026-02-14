@@ -10,6 +10,10 @@ const rollDiceBtn = document.querySelector(".rollDice");
 const newGameBtn = document.querySelector(".newGame");
 const holdBtn = document.querySelector(".hold");
 const cheersSound = new Audio("./cheers.mp3");
+const currentScoreLost = new Audio("./lost.mp3");
+const clapSound = new Audio("./clap.mp3");
+const diceRollSound = new Audio("./dice_roll.mp3");
+
 //Initial conditions
 let currentScore = 0;
 let activePlayer = 1;
@@ -47,15 +51,19 @@ rollDiceBtn.addEventListener("click", () => {
     currentScore += rollDice;
     document.querySelector(`.current_score--${activePlayer}`).textContent =
       currentScore;
+    diceRollSound.play();
   } else {
     switchPlayer();
+    currentScoreLost.play();
   }
 });
+
 holdBtn.addEventListener("click", () => {
   //Sum of current score and total score and set it to active player:
   activePlayer === 1
     ? (playerOneTotal.textContent = playerOneScore += currentScore)
     : (playerTwoTotal.textContent = playerTwoScore += currentScore);
+  clapSound.play();
   //Calling switch player function
   switchPlayer();
   //Winning condition for player-1
@@ -65,8 +73,9 @@ holdBtn.addEventListener("click", () => {
     playerOneName.classList.add("py-3");
     playerOneName.classList.add("rounded-lg");
     playerOneScore = 0;
-    cheers();
+    // cheers();
     cheersSound.play();
+    clapSound.play();
   }
   //Winning condition for player-2
   if (playerTwoScore >= 100 && playerTwoScore > playerOneScore) {
@@ -75,8 +84,9 @@ holdBtn.addEventListener("click", () => {
     playerTwoName.classList.add("py-3");
     playerTwoName.classList.add("rounded-lg");
     playerTwoScore = 0;
-    cheers();
+    // cheers();
     cheersSound.play();
+    clapSound.play();
   }
 });
 

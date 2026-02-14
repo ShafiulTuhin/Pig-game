@@ -40,6 +40,8 @@ const cheers = () => {
   activePlayer = 1;
   rollDiceBtn.disabled = true;
   holdBtn.disabled = true;
+  cheersSound.play();
+  clapSound.play();
 };
 //Event handler
 rollDiceBtn.addEventListener("click", () => {
@@ -73,9 +75,7 @@ holdBtn.addEventListener("click", () => {
     playerOneName.classList.add("py-3");
     playerOneName.classList.add("rounded-lg");
     playerOneScore = 0;
-    // cheers();
-    cheersSound.play();
-    clapSound.play();
+    cheers();
   }
   //Winning condition for player-2
   if (playerTwoScore >= 100 && playerTwoScore > playerOneScore) {
@@ -84,9 +84,7 @@ holdBtn.addEventListener("click", () => {
     playerTwoName.classList.add("py-3");
     playerTwoName.classList.add("rounded-lg");
     playerTwoScore = 0;
-    // cheers();
-    cheersSound.play();
-    clapSound.play();
+    cheers();
   }
 });
 
